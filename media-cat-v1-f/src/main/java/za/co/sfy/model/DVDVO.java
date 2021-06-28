@@ -4,6 +4,19 @@ public class DVDVO extends MediaTypeVO {
 	private String leadActor;
 	private String leadActress;
 
+
+	/*
+	 * XXX Try to avoid using the constructor to initialize an entire object.
+	 *  Constructors parameters are used to ensure objects cannot be created without certain values, for example a database connection
+	 *  object cannot be created without a user-name or password.
+	 *  In this case I should be able to create a DVD without a genre?
+	 *  
+	 *  Also avoid doing this, because if you were to add a new attribute to the DVD class, you would be forced to reactor 
+	 *  all the places (in the code) where it is being instantiated.
+	 *  
+	 *  So rule of Thumb, only pass parameters into your constructor when an object cannot exist without a value
+	 *  
+	 */
 	public DVDVO(MediaTypeVO type, String title, int length, String genre, String leadActor, String leadActress) {
 		super(type, title, length, genre);
 		this.leadActor = leadActor;

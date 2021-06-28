@@ -9,6 +9,7 @@ import java.net.Socket;
 
 public class NetworkClient implements NetworkClientInterface {
 
+	// XXX 's' is a terrible name for a variable, call it socket
 	private Socket s;
 
 //	public static void main(String[] args) {
@@ -30,6 +31,7 @@ public class NetworkClient implements NetworkClientInterface {
 		try {
 			s = new Socket("127.0.0.1", 12121);
 		} catch (IOException ex) {
+			// XXX This is where we should be throwing a RuntimeException, If we cannot connect to the database the should the app continue to run?
 			System.out.println("Error creating socket"); 
 			ex.printStackTrace();
 		}
@@ -47,6 +49,7 @@ public class NetworkClient implements NetworkClientInterface {
 		} catch (IOException ex) {
 			System.out.println("Error Writing: " + ex.getMessage());
 		} finally {
+			// XXX why are you not closing the connections? It seems that the code calling this code is responsible to managing the connections?
 //			try {
 //				if (s != null) {
 //					s.close();

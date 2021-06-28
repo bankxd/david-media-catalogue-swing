@@ -32,6 +32,7 @@ public class AddCDPanel  extends JPanel {
 		initComponents();
 	}
 
+	// XXX This method is only 3 lines different from the method in the AboutPanel, surly it can be re-factored?
 	private void initComponents() {
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.GREEN.brighter());

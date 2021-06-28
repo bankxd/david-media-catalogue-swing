@@ -20,9 +20,11 @@ import javax.swing.border.LineBorder;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
+// XXX don't SuppressWarnings, fix them
 @SuppressWarnings("serial")
 public class HomePanel extends JPanel {
 
+	// XXX don't SuppressWarnings, fix them
 	@SuppressWarnings("unused")
 	private ViewFrame v;
 	ClientServiceInterface cs;
