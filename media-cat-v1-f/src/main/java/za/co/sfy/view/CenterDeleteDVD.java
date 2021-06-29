@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -21,27 +20,26 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import za.co.sfy.model.CDVO;
+import za.co.sfy.model.DVDVO;
 import za.co.sfy.model.MediaTypeVO;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
-@SuppressWarnings("serial")
-public class XDeleteCD extends JPanel {
+public class CenterDeleteDVD extends JPanel {
 	
-	private ViewFrame v;
-	ClientServiceInterface cs;
+	private static final long serialVersionUID = -4187373672268545115L;
+	private ViewFrame viewFrame;
+	ClientServiceInterface clientService;
 	int selectedRow;
 	String selectedTitle;
 
-	public XDeleteCD(ViewFrame v) {
-		this.v = v;
-        cs = new ClientService();
+	public CenterDeleteDVD(ViewFrame v) {
+		this.viewFrame = v;
+        clientService = new ClientService();
 		initComponents();
 	}
 
@@ -60,21 +58,19 @@ public class XDeleteCD extends JPanel {
 		dvdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new DeleteDVDPanel(v));
+	        	viewFrame.putPanel(new DeleteDVDPanel(viewFrame));
 	        }
 	    });
 		JRadioButton cdRadio = new JRadioButton("CD");
 		cdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new DeleteCDPanel(v));
+	        	viewFrame.putPanel(new DeleteCDPanel(viewFrame));
 	        }
 	    });
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(cdRadio);
 		bg.add(dvdRadio);
-
-		// *******************************************************************
 
 		JPanel gridBox = new JPanel(new BorderLayout());
 		JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -89,24 +85,22 @@ public class XDeleteCD extends JPanel {
 		grid.add(dvdRadio);
 		gridBox.add(grid, BorderLayout.CENTER);
 		
-		// *******************************************************************
-		
-		List<MediaTypeVO> receiveAllOfMediaType = cs.receiveAllOfMediaType(new CDVO());
+		List<MediaTypeVO> receiveAllOfMediaType = clientService.receiveAllOfMediaType(new DVDVO());
 		String[][] data = new String[receiveAllOfMediaType.size()][5];
 		for (int i = 0; i < receiveAllOfMediaType.size(); i++) {
-			CDVO mtcd = (CDVO) receiveAllOfMediaType.get(i);
+			DVDVO mtdvd = (DVDVO) receiveAllOfMediaType.get(i);
 			String[] dataArr = new String[5];
-			dataArr[0] = mtcd.getTitle();
-			dataArr[1] = mtcd.getGenre();
-			dataArr[2] = String.valueOf(mtcd.getLength());
-			dataArr[3] = String.valueOf(mtcd.getTracks());
-			dataArr[4] = mtcd.getArtists().toString().replaceAll("\\[|\\]", "");
+			dataArr[0] = mtdvd.getTitle();
+			dataArr[1] = mtdvd.getGenre();
+			dataArr[2] = String.valueOf(mtdvd.getLength());
+			dataArr[3] = String.valueOf(mtdvd.getLeadActor());
+			dataArr[4] = mtdvd.getLeadActress();
 			for (int j = 0; j < 5; j++) {
 				data[i][j] = dataArr[j];
 			}
 		}
 
-		String[] columnNames = { "Title", "Genre", "Duration", "Tracks", "Artists" };
+		String[] columnNames = { "Title", "Genre", "Duration", "Lead Actor", "Lead Actress" };
 
 		JTable table = new JTable(data, columnNames);
 		table.setDefaultEditor(Object.class, null);
@@ -115,19 +109,16 @@ public class XDeleteCD extends JPanel {
 		        if (table.getSelectedRow() > -1) {
 		        	setSelectedRow(table.getSelectedRow());
 		        	setSelectedTitle(table.getValueAt(table.getSelectedRow(), 0).toString());
-		        	v.putPanel(new SelectionDeleteConfirmationCD(v, getSelectedTitle()));
+		        	viewFrame.putPanel(new SelectionDeleteConfirmationDVD(viewFrame, getSelectedTitle()));
 		        }
 		    }
 		});
 
 		JScrollPane sp = new JScrollPane(table);
 		
-		
 		JPanel t = new JPanel();
 		t.setPreferredSize(new Dimension(480, 290));
 		t.add(sp);
-
-		// *******************************************************************
 
 		JPanel addBox = new JPanel(new BorderLayout());
 		JPanel addTop = new JPanel();
@@ -157,8 +148,6 @@ public class XDeleteCD extends JPanel {
 		    	deleteBut.setBackground(Color.green.darker());
 		    }
 		});
-
-		// *******************************************************************
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -198,7 +187,6 @@ public class XDeleteCD extends JPanel {
 		this.add(deleteBut, gbc);
 
 	}
-	// *******************************************************************
 
 	public int getSelectedRow() {
 		return selectedRow;
@@ -215,7 +203,4 @@ public class XDeleteCD extends JPanel {
 	public void setSelectedTitle(String selectedTitle) {
 		this.selectedTitle = selectedTitle;
 	}
-	
-	
-	
 }

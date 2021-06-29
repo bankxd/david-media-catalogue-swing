@@ -6,22 +6,6 @@ public abstract class MediaTypeVO {
 	private int length;
 	private String genre;
 
-	public MediaTypeVO(MediaTypeVO type, String title, int length, String genre) {
-		this.type = type;
-		this.title = title;
-		this.length = length;
-		this.genre = genre;
-	}
-	
-	public MediaTypeVO() {
-	}
-	
-	
-
-	public MediaTypeVO(String title) {
-		this.title = title;
-	}
-
 	public MediaTypeVO getType() {
 		return type;
 	}

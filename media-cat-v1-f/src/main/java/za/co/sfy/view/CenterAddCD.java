@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,20 +22,20 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import za.co.sfy.model.DVDVO;
+import za.co.sfy.model.CDVO;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
-public class XAddDVD extends JPanel {
+public class CenterAddCD extends JPanel {
+	
+	private static final long serialVersionUID = 8973273509847236500L;
 
-	public int index;
-
-	private ViewFrame v;
+	private ViewFrame viewFrame;
 	ClientServiceInterface cs;
 
-	public XAddDVD(ViewFrame v) {
-		this.v = v;
-		cs = new ClientService();
+	public CenterAddCD(ViewFrame v) {
+		this.viewFrame = v;
+        cs = new ClientService();
 		initComponents();
 	}
 
@@ -50,23 +52,21 @@ public class XAddDVD extends JPanel {
 
 		JRadioButton dvdRadio = new JRadioButton("DVD");
 		dvdRadio.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				v.putPanel(new AddDVDPanel(v));
-			}
-		});
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	viewFrame.putPanel(new AddDVDPanel(viewFrame));
+	        }
+	    });
 		JRadioButton cdRadio = new JRadioButton("CD");
 		cdRadio.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				v.putPanel(new AddCDPanel(v));
-			}
-		});
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	viewFrame.putPanel(new AddCDPanel(viewFrame));
+	        }
+	    });
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(cdRadio);
 		bg.add(dvdRadio);
-
-		// *******************************************************************
 
 		JPanel gridBox = new JPanel(new BorderLayout());
 		JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -81,26 +81,24 @@ public class XAddDVD extends JPanel {
 		grid.add(dvdRadio);
 		gridBox.add(grid, BorderLayout.CENTER);
 
-		// *******************************************************************
-
 		JPanel addBox = new JPanel(new BorderLayout());
-		JPanel addGrid = new JPanel(new GridLayout(5, 2));
+		JPanel addGrid = new JPanel(new GridLayout(5,2));
 		addGrid.setBorder(new LineBorder(Color.white, 10));
 		JTextField titleField = new JTextField();
 		JTextField genreField = new JTextField();
 		JTextField durationField = new JTextField();
-		JTextField actorField = new JTextField();
-		JTextField actressField = new JTextField();
+		JTextField tracksField = new JTextField();
+		JTextField artistsField = new JTextField();
 		addGrid.add(new JLabel("Title: "));
 		addGrid.add(titleField);
 		addGrid.add(new JLabel("Genre: "));
 		addGrid.add(genreField);
 		addGrid.add(new JLabel("Duration: "));
 		addGrid.add(durationField);
-		addGrid.add(new JLabel("Lead Actor: "));
-		addGrid.add(actorField);
-		addGrid.add(new JLabel("Lead Actress: "));
-		addGrid.add(actressField);
+		addGrid.add(new JLabel("Tracks: "));
+		addGrid.add(tracksField);
+		addGrid.add(new JLabel("Artists: "));
+		addGrid.add(artistsField);
 		addGrid.setPreferredSize(new Dimension(40, 40));
 		JPanel addTop = new JPanel();
 		JLabel addjl = new JLabel("Add Item");
@@ -119,10 +117,20 @@ public class XAddDVD extends JPanel {
 		saveBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean result = cs.createMediaType(new DVDVO(new DVDVO(), titleField.getText(), Integer.parseInt(durationField.getText()), genreField.getText(),
-						actorField.getText(), actressField.getText()));
-				
-				v.putPanel(new ResultPanel(v, result == true? "Successfully Created DVD" : "Unsuccessful"));
+				List<String> list = new ArrayList<String>();
+				String[] split = artistsField.getText().split(",");
+				for (String artist : split) {
+					list.add(artist);
+				}
+				CDVO cd = new CDVO();
+				cd.setType(cd);
+				cd.setTitle(titleField.getText());
+				cd.setLength(Integer.parseInt(durationField.getText()));
+				cd.setGenre(genreField.getText());
+				cd.setTracks(Integer.parseInt(tracksField.getText()));
+				cd.setArtists(list);
+				boolean result = cs.createMediaType(cd);
+				viewFrame.putPanel(new ResultPanel(viewFrame, result == true? "Successfully Created CD" : "Unsuccessful"));
 			}
 		});
 		saveBut.addMouseListener(new MouseAdapter() {
@@ -134,8 +142,6 @@ public class XAddDVD extends JPanel {
 		    	saveBut.setBackground(Color.green.darker());
 		    }
 		});
-
-		// *******************************************************************
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -173,7 +179,6 @@ public class XAddDVD extends JPanel {
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(saveBut, gbc);
-
 	}
-	// *******************************************************************
 }
+

@@ -17,26 +17,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import za.co.sfy.services.ClientServiceInterface;
-
 public class SelectionDeleteConfirmationCD extends JPanel {
 
-	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 7663608837750107060L;
 	private ViewFrame v;
-	ClientServiceInterface cs;
 	int selectedIndex;
 
 	public SelectionDeleteConfirmationCD(ViewFrame v, String title) {
 		this.v = v;
-//        cs = new ClientService();
 		initComponents(title);
 	}
 
 	private void initComponents(String title) {
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.GREEN.brighter());
-
-		// *************************************************************************
 
 		JPanel navPanel = new JPanel(new BorderLayout());
 		JPanel innerNavPanel = new JPanel(new BorderLayout());
@@ -100,8 +94,6 @@ public class SelectionDeleteConfirmationCD extends JPanel {
 		navPanel.add(innerNavPanel);
 		this.add(navPanel, BorderLayout.NORTH);
 
-		// *************************************************************************
-
 		JPanel mainCenterPanel = new JPanel();
 		mainCenterPanel.setLayout(new BorderLayout());
 		mainCenterPanel.setVisible(true);
@@ -109,9 +101,7 @@ public class SelectionDeleteConfirmationCD extends JPanel {
 		mainCenterPanel.setPreferredSize(new Dimension(100, 100));
 		mainCenterPanel.setMaximumSize(new Dimension(100, 100));
 		mainCenterPanel.setBorder(new LineBorder(Color.WHITE, 10, false));
-		mainCenterPanel.add(new XDeleteConfirmationCD(v, title), BorderLayout.CENTER);
-
-		// *************************************************************************
+		mainCenterPanel.add(new CenterDeleteConfirmationCD(v, title), BorderLayout.CENTER);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BorderLayout());
@@ -122,8 +112,6 @@ public class SelectionDeleteConfirmationCD extends JPanel {
 		centerPanel.setBorder(new LineBorder(Color.GREEN.brighter(), 25, true));
 		centerPanel.add(mainCenterPanel, BorderLayout.CENTER);
 		this.add(centerPanel, BorderLayout.CENTER);
-
-		// *************************************************************************
 
 		JPanel westPanel = new JPanel();
 		westPanel.setVisible(true);
@@ -136,8 +124,6 @@ public class SelectionDeleteConfirmationCD extends JPanel {
 		eastPanel.setBackground(Color.GREEN.brighter());
 		eastPanel.setPreferredSize(new Dimension(200, 200));
 		this.add(eastPanel, BorderLayout.EAST);
-
-		// *************************************************************************
 
 		JPanel footerPanel = new JPanel(new BorderLayout());
 		JLabel footLabel = new JLabel("  © 2020 Media Catalogue");

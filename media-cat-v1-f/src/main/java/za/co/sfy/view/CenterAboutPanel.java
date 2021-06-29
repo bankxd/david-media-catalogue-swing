@@ -13,14 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-/*
- * XXX XAboutPanel looks like an old copy of AboutPanel, since we have tools like Git 
- * you should never need to commit old code which you might want to keep, rather commit it to a branch
- */
-@SuppressWarnings("serial")
-public class XAboutPanel extends JPanel {
+public class CenterAboutPanel extends JPanel {
 	
-    public XAboutPanel() {
+	private static final long serialVersionUID = 3913597795791355034L;
+
+	public CenterAboutPanel() {
 		GridBagLayout gbl = new GridBagLayout();
 		this.setLayout(gbl);
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -35,10 +32,14 @@ public class XAboutPanel extends JPanel {
 		try {
 			myPicture = ImageIO.read(new File("C:\\Users\\daves\\Pictures\\mediaCatImg.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+		JLabel picLabel = null;
+		if (myPicture != null) {
+			picLabel = new JLabel(new ImageIcon(myPicture));
+		} else {
+			picLabel = new JLabel("SFY");
+		}
     	
     	JLabel about = new JLabel("Media Catalogue displays all CDs and DVDs added by the user.");
 
@@ -70,6 +71,5 @@ public class XAboutPanel extends JPanel {
 		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(js2, gbc);
-
 	}
 }

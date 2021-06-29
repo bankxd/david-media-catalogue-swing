@@ -4,19 +4,6 @@ public class DVD extends MediaType {
 	private String leadActor;
 	private String leadActress;
 
-	public DVD(MediaType type, String title, int length, String genre, String leadActor, String leadActress) {
-		super(type, title, length, genre);
-		this.leadActor = leadActor;
-		this.leadActress = leadActress;
-	}
-
-	public DVD(MediaType type, String title) {
-		super(type, title);
-	}
-
-	public DVD() {
-	}
-
 	@Override
 	public String getTitle() {
 		return super.getTitle();
@@ -72,5 +59,4 @@ public class DVD extends MediaType {
 	public void setLeadActress(String leadActress) {
 		this.leadActress = leadActress;
 	}
-
 }

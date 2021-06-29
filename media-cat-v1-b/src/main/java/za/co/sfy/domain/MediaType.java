@@ -6,21 +6,6 @@ public abstract class MediaType {
 	private int length;
 	private String genre;
 
-	public MediaType(MediaType type, String title, int length, String genre) {
-		this.type = type;
-		this.title = title;
-		this.length = length;
-		this.genre = genre;
-	}
-	
-	public MediaType(MediaType type, String title) {
-		this.type = type;
-		this.title = title;
-	}
-
-	public MediaType() {
-	}
-
 	public MediaType getType() {
 		return type;
 	}
@@ -52,5 +37,4 @@ public abstract class MediaType {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-
 }

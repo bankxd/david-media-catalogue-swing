@@ -10,39 +10,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import za.co.sfy.model.CDVO;
+import za.co.sfy.model.MediaTypeVO;
+import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
-public class XDeleteHome extends JPanel {
-
-	private ViewFrame v;
-	ClientServiceInterface cs;
-	String messageReturned;
-
-	public XDeleteHome(ViewFrame v, String message) {
-		this.v = v;
-		this.messageReturned = message;
-//        cs = new ClientService();
-		initComponents();
-	}
+public class CenterDeleteCD extends JPanel {
 	
-	public XDeleteHome(ViewFrame v) {
-		this.v = v;
+	private static final long serialVersionUID = 8224279053840305728L;
+	private ViewFrame viewFrame;
+	ClientServiceInterface clientService;
+	int selectedRow;
+	String selectedTitle;
+
+	public CenterDeleteCD(ViewFrame v) {
+		this.viewFrame = v;
+        clientService = new ClientService();
 		initComponents();
 	}
-
-	// *******************************************************************
 
 	public void initComponents() {
-		messageReturned = null;
 		GridBagLayout gbl = new GridBagLayout();
 		this.setLayout(gbl);
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -57,21 +58,19 @@ public class XDeleteHome extends JPanel {
 		dvdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new DeleteDVDPanel(v));
+	        	viewFrame.putPanel(new DeleteDVDPanel(viewFrame));
 	        }
 	    });
 		JRadioButton cdRadio = new JRadioButton("CD");
 		cdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new DeleteCDPanel(v));
+	        	viewFrame.putPanel(new DeleteCDPanel(viewFrame));
 	        }
 	    });
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(cdRadio);
 		bg.add(dvdRadio);
-
-		// *******************************************************************
 
 		JPanel gridBox = new JPanel(new BorderLayout());
 		JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -85,49 +84,70 @@ public class XDeleteHome extends JPanel {
 		grid.add(cdRadio);
 		grid.add(dvdRadio);
 		gridBox.add(grid, BorderLayout.CENTER);
+		
+		List<MediaTypeVO> receiveAllOfMediaType = clientService.receiveAllOfMediaType(new CDVO());
+		String[][] data = new String[receiveAllOfMediaType.size()][5];
+		for (int i = 0; i < receiveAllOfMediaType.size(); i++) {
+			CDVO mtcd = (CDVO) receiveAllOfMediaType.get(i);
+			String[] dataArr = new String[5];
+			dataArr[0] = mtcd.getTitle();
+			dataArr[1] = mtcd.getGenre();
+			dataArr[2] = String.valueOf(mtcd.getLength());
+			dataArr[3] = String.valueOf(mtcd.getTracks());
+			dataArr[4] = mtcd.getArtists().toString().replaceAll("\\[|\\]", "");
+			for (int j = 0; j < 5; j++) {
+				data[i][j] = dataArr[j];
+			}
+		}
 
-		// *******************************************************************
+		String[] columnNames = { "Title", "Genre", "Duration", "Tracks", "Artists" };
+
+		JTable table = new JTable(data, columnNames);
+		table.setDefaultEditor(Object.class, null);
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    public void valueChanged(ListSelectionEvent event) {
+		        if (table.getSelectedRow() > -1) {
+		        	setSelectedRow(table.getSelectedRow());
+		        	setSelectedTitle(table.getValueAt(table.getSelectedRow(), 0).toString());
+		        	viewFrame.putPanel(new SelectionDeleteConfirmationCD(viewFrame, getSelectedTitle()));
+		        }
+		    }
+		});
+
+		JScrollPane sp = new JScrollPane(table);
+		
+		JPanel t = new JPanel();
+		t.setPreferredSize(new Dimension(480, 290));
+		t.add(sp);
 
 		JPanel addBox = new JPanel(new BorderLayout());
-		JPanel addGrid = new JPanel(new BorderLayout());
-		addGrid.setPreferredSize(new Dimension(50, 0));
 		JPanel addTop = new JPanel();
 		JLabel addjl = new JLabel("Delete Item");
 		addTop.setBackground(Color.gray.brighter());
-		addGrid.setBackground(Color.white);
-		addBox.setBackground(Color.white);
-		addBox.setPreferredSize(new Dimension(300, 30));
+		addBox.setPreferredSize(new Dimension(480, 80));
 		addTop.add(addjl);
 		addBox.add(addTop, BorderLayout.NORTH);
-		addBox.add(addGrid, BorderLayout.CENTER);
-		if(getMessageReturned() != null) {
-			JLabel res = new JLabel(getMessageReturned());
-			addBox.add(res);
-			res.setHorizontalAlignment(JLabel.CENTER);
-		}
+		addBox.add(t, BorderLayout.CENTER);
 
-		JButton backBut = new JButton("Back");
-		backBut.setPreferredSize(new Dimension(100, 25));
-		backBut.setForeground(Color.white);
-		backBut.setBackground(Color.green.darker());
-		backBut.setBorder(new LineBorder(Color.green));
-		backBut.addActionListener(new ActionListener() {
+		JButton deleteBut = new JButton("Delete Item");
+		deleteBut.setPreferredSize(new Dimension(100, 25));
+		deleteBut.setForeground(Color.white);
+		deleteBut.setBackground(Color.green.darker());
+		deleteBut.setBorder(new LineBorder(Color.green.brighter()));
+		deleteBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				v.putPanel(new CataloguePanel(v));
 			}
 		});
-		backBut.addMouseListener(new MouseAdapter() {
+		deleteBut.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
-		    	backBut.setBackground(Color.gray.brighter());
+		    	deleteBut.setBackground(Color.gray.brighter());
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
-		    	backBut.setBackground(Color.green.darker());
+		    	deleteBut.setBackground(Color.green.darker());
 		    }
 		});
-
-		// *******************************************************************
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -164,18 +184,23 @@ public class XDeleteHome extends JPanel {
 		gbc.gridy = 5;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(backBut, gbc);
+		this.add(deleteBut, gbc);
 
 	}
-	// *******************************************************************
 
-	public String getMessageReturned() {
-		return messageReturned;
+	public int getSelectedRow() {
+		return selectedRow;
 	}
 
-	public void setMessageReturned(String messageReturned) {
-		this.messageReturned = messageReturned;
+	public void setSelectedRow(int selectedRow) {
+		this.selectedRow = selectedRow;
 	}
-	
-	
+
+	public String getSelectedTitle() {
+		return selectedTitle;
+	}
+
+	public void setSelectedTitle(String selectedTitle) {
+		this.selectedTitle = selectedTitle;
+	}
 }

@@ -17,27 +17,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import za.co.sfy.services.ClientServiceInterface;
-
 public class ResultPanel extends JPanel {
 
-	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 181305472363242741L;
 	private ViewFrame v;
-	ClientServiceInterface cs;
 	String messageReturned;
 
 	public ResultPanel(ViewFrame v, String message) {
 		this.v = v;
 		this.messageReturned = message;
-//        cs = new ClientService();
 		initComponents(message); 
 	}
 
 	private void initComponents(String message) {
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.GREEN.brighter());
-
-		// *************************************************************************
 
 		JPanel navPanel = new JPanel(new BorderLayout());
 		JPanel innerNavPanel = new JPanel(new BorderLayout());
@@ -101,8 +95,6 @@ public class ResultPanel extends JPanel {
 		navPanel.add(innerNavPanel);
 		this.add(navPanel, BorderLayout.NORTH);
 
-		// *************************************************************************
-
 		JPanel mainCenterPanel = new JPanel();
 		mainCenterPanel.setLayout(new BorderLayout());
 		mainCenterPanel.setVisible(true);
@@ -110,9 +102,7 @@ public class ResultPanel extends JPanel {
 		mainCenterPanel.setPreferredSize(new Dimension(100, 100));
 		mainCenterPanel.setMaximumSize(new Dimension(100, 100));
 		mainCenterPanel.setBorder(new LineBorder(Color.WHITE, 10, false));
-		mainCenterPanel.add(new XCatalogueHome(v, message), BorderLayout.CENTER);
-
-		// *************************************************************************
+		mainCenterPanel.add(new CenterCatalogueHome(v, message), BorderLayout.CENTER);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BorderLayout());
@@ -123,8 +113,6 @@ public class ResultPanel extends JPanel {
 		centerPanel.setBorder(new LineBorder(Color.GREEN.brighter(), 25, true));
 		centerPanel.add(mainCenterPanel, BorderLayout.CENTER);
 		this.add(centerPanel, BorderLayout.CENTER);
-
-		// *************************************************************************
 
 		JPanel westPanel = new JPanel();
 		westPanel.setVisible(true);
@@ -137,8 +125,6 @@ public class ResultPanel extends JPanel {
 		eastPanel.setBackground(Color.GREEN.brighter());
 		eastPanel.setPreferredSize(new Dimension(200, 200));
 		this.add(eastPanel, BorderLayout.EAST);
-
-		// *************************************************************************
 
 		JPanel footerPanel = new JPanel(new BorderLayout());
 		JLabel footLabel = new JLabel("  © 2020 Media Catalogue");
@@ -157,6 +143,4 @@ public class ResultPanel extends JPanel {
 	public void setMessageReturned(String messageReturned) {
 		this.messageReturned = messageReturned;
 	}
-	
-	
 }

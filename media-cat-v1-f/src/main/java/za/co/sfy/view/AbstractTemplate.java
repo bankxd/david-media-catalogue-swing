@@ -17,18 +17,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class SelectionDeleteConfirmationDVD extends JPanel {
+public abstract class AbstractTemplate extends JPanel {
+	
+	private static final long serialVersionUID = -6941754009840686963L;
+	private ViewFrame viewFrame;
 
-	private static final long serialVersionUID = 6861109673814753149L;
-	private ViewFrame v;
-	int selectedIndex;
-
-	public SelectionDeleteConfirmationDVD(ViewFrame v, String title) {
-		this.v = v;
-		initComponents(title);
+	public AbstractTemplate(ViewFrame v) {
+		this.viewFrame = v;
 	}
-
-	private void initComponents(String title) {
+	
+	public void initComponents(JPanel centralPanel) {
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.GREEN.brighter());
 
@@ -45,7 +43,7 @@ public class SelectionDeleteConfirmationDVD extends JPanel {
 		homeBut.setBorderPainted(false);
 		homeBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				v.putPanel(new HomePanel(v));
+				viewFrame.putPanel(new HomePanel(viewFrame));
 			}
 		});
 		JButton aboutBut = new JButton("ABOUT");
@@ -54,7 +52,7 @@ public class SelectionDeleteConfirmationDVD extends JPanel {
 		aboutBut.setBorderPainted(false);
 		aboutBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				v.putPanel(new AboutPanel(v));
+				viewFrame.putPanel(new AboutPanel(viewFrame));
 			}
 		});
 		JButton catalogueBut = new JButton("CATALOGUE");
@@ -63,7 +61,7 @@ public class SelectionDeleteConfirmationDVD extends JPanel {
 		catalogueBut.setBorderPainted(false);
 		catalogueBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				v.putPanel(new CataloguePanel(v));
+				viewFrame.putPanel(new CataloguePanel(viewFrame));
 			}
 		});
 
@@ -82,10 +80,17 @@ public class SelectionDeleteConfirmationDVD extends JPanel {
 		try {
 			myPicture = ImageIO.read(new File("C:\\Users\\daves\\Pictures\\mediaCatImg.png"));
 		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-		westPanelNav.add(picLabel);
+		JLabel picLabel = null;
+		if (myPicture != null) {
+			picLabel = new JLabel(new ImageIcon(myPicture));
+			westPanelNav.add(picLabel);
+		} else {
+			picLabel = new JLabel("SFY");
+			westPanelNav.add(picLabel);
+		}
 		westPanelNav.setBackground(Color.GREEN.darker());
 		westPanelNav.setPreferredSize(new Dimension(250, 50));
 
@@ -101,7 +106,7 @@ public class SelectionDeleteConfirmationDVD extends JPanel {
 		mainCenterPanel.setPreferredSize(new Dimension(100, 100));
 		mainCenterPanel.setMaximumSize(new Dimension(100, 100));
 		mainCenterPanel.setBorder(new LineBorder(Color.WHITE, 10, false));
-		mainCenterPanel.add(new CenterDeleteConfirmationDVD(v, title), BorderLayout.CENTER);
+		mainCenterPanel.add(centralPanel, BorderLayout.CENTER);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BorderLayout());

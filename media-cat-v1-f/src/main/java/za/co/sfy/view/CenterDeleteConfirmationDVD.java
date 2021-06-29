@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -19,24 +17,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import za.co.sfy.model.CDVO;
 import za.co.sfy.model.DVDVO;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
-public class XAddCD extends JPanel {
-	
-	public int index;
-	
-	private ViewFrame v;
-	ClientServiceInterface cs;
+public class CenterDeleteConfirmationDVD extends JPanel {
 
-	public XAddCD(ViewFrame v) {
-		this.v = v;
-        cs = new ClientService();
+	private static final long serialVersionUID = 7262914232089341615L;
+	private ViewFrame viewFrame;
+	ClientServiceInterface clientService;
+	String messageReturned;
+
+	public CenterDeleteConfirmationDVD(ViewFrame v, String message) {
+		this.viewFrame = v;
+		this.messageReturned = message;
+        clientService = new ClientService();
+		initComponents();
+	}
+	
+	public CenterDeleteConfirmationDVD(ViewFrame v) {
+		this.viewFrame = v;
 		initComponents();
 	}
 
@@ -55,28 +57,26 @@ public class XAddCD extends JPanel {
 		dvdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new AddDVDPanel(v));
+	        	viewFrame.putPanel(new DeleteDVDPanel(viewFrame));
 	        }
 	    });
 		JRadioButton cdRadio = new JRadioButton("CD");
 		cdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new AddCDPanel(v));
+	        	viewFrame.putPanel(new DeleteCDPanel(viewFrame));
 	        }
 	    });
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(cdRadio);
 		bg.add(dvdRadio);
 
-		// *******************************************************************
-
 		JPanel gridBox = new JPanel(new BorderLayout());
 		JPanel grid = new JPanel(new GridLayout(2, 1));
 		grid.setBackground(Color.white);
 		grid.setPreferredSize(new Dimension(50, 50));
 		JPanel top = new JPanel();
-		JLabel jl = new JLabel("Add Item");
+		JLabel jl = new JLabel("Delete Item");
 		top.setBackground(Color.gray.brighter());
 		top.add(jl);
 		gridBox.add(top, BorderLayout.NORTH);
@@ -84,66 +84,47 @@ public class XAddCD extends JPanel {
 		grid.add(dvdRadio);
 		gridBox.add(grid, BorderLayout.CENTER);
 
-		// *******************************************************************
-
 		JPanel addBox = new JPanel(new BorderLayout());
-		JPanel addGrid = new JPanel(new GridLayout(5,2));
-		addGrid.setBorder(new LineBorder(Color.white, 10));
-		JTextField titleField = new JTextField();
-		JTextField genreField = new JTextField();
-		JTextField durationField = new JTextField();
-		JTextField tracksField = new JTextField();
-		JTextField artistsField = new JTextField();
-		addGrid.add(new JLabel("Title: "));
-		addGrid.add(titleField);
-		addGrid.add(new JLabel("Genre: "));
-		addGrid.add(genreField);
-		addGrid.add(new JLabel("Duration: "));
-		addGrid.add(durationField);
-		addGrid.add(new JLabel("Tracks: "));
-		addGrid.add(tracksField);
-		addGrid.add(new JLabel("Artists: "));
-		addGrid.add(artistsField);
-		addGrid.setPreferredSize(new Dimension(40, 40));
+		JPanel addGrid = new JPanel(new BorderLayout());
+		addGrid.setPreferredSize(new Dimension(50, 0));
 		JPanel addTop = new JPanel();
-		JLabel addjl = new JLabel("Add Item");
+		JLabel addjl = new JLabel("Delete Item");
 		addTop.setBackground(Color.gray.brighter());
 		addGrid.setBackground(Color.white);
+		addBox.setBackground(Color.white);
 		addBox.setPreferredSize(new Dimension(300, 30));
 		addTop.add(addjl);
 		addBox.add(addTop, BorderLayout.NORTH);
 		addBox.add(addGrid, BorderLayout.CENTER);
+		if(getMessageReturned() != null) {
+			JLabel res = new JLabel(getMessageReturned());
+			addBox.add(res);
+			res.setHorizontalAlignment(JLabel.CENTER);
+		}
 
-		JButton saveBut = new JButton("Save");
-		saveBut.setPreferredSize(new Dimension(100, 25));
-		saveBut.setForeground(Color.white);
-		saveBut.setBackground(Color.green.darker());
-		saveBut.setBorder(new LineBorder(Color.green.brighter()));
-		saveBut.addActionListener(new ActionListener() {
+		JButton backBut = new JButton("Delete Item: " + getMessageReturned());
+		backBut.setPreferredSize(new Dimension(100, 25));
+		backBut.setForeground(Color.white);
+		backBut.setBackground(Color.green.darker());
+		backBut.setBorder(new LineBorder(Color.green));
+		backBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<String> list = new ArrayList<String>();
-				String[] split = artistsField.getText().split(",");
-				for (String artist : split) {
-					list.add(artist);
-				}
-				boolean result = cs.createMediaType(new CDVO(new CDVO(), titleField.getText(), Integer.parseInt(durationField.getText()), genreField.getText(),
-						Integer.parseInt(tracksField.getText()), list));
-				
-				v.putPanel(new ResultPanel(v, result == true? "Successfully Created CD" : "Unsuccessful"));
+				DVDVO mtdvd = new DVDVO();
+				mtdvd.setTitle(getMessageReturned());
+				boolean deleteResult = clientService.delete(mtdvd);
+				viewFrame.putPanel(new ResultPanel(viewFrame, deleteResult == true? "Successfully Deleted DVD" : "Unsuccessful"));
 			}
 		});
-		saveBut.addMouseListener(new MouseAdapter() {
+		backBut.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
-		    	saveBut.setBackground(Color.gray.brighter());
+		    	backBut.setBackground(Color.gray.brighter());
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
-		    	saveBut.setBackground(Color.green.darker());
+		    	backBut.setBackground(Color.green.darker());
 		    }
 		});
-
-		// *******************************************************************
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -180,9 +161,15 @@ public class XAddCD extends JPanel {
 		gbc.gridy = 5;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(saveBut, gbc);
+		this.add(backBut, gbc);
 
 	}
-	// *******************************************************************
-}
 
+	public String getMessageReturned() {
+		return messageReturned;
+	}
+
+	public void setMessageReturned(String messageReturned) {
+		this.messageReturned = messageReturned;
+	}
+}

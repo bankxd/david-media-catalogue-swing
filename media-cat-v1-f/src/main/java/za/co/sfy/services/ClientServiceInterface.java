@@ -5,14 +5,11 @@ import java.util.List;
 import za.co.sfy.model.MediaTypeVO;
 
 public interface ClientServiceInterface {
+	public boolean request(String protocol);
 
-    boolean createMediaType(MediaTypeVO type);
+	public boolean createMediaType(MediaTypeVO type);
 
-    boolean request(String protocol);
+	public List<MediaTypeVO> receiveAllOfMediaType(MediaTypeVO type);
 
-    List<MediaTypeVO> receiveAllOfMediaType(MediaTypeVO type);
-
-    boolean update(MediaTypeVO type);
-
-    boolean delete(MediaTypeVO type);
+	public boolean delete(MediaTypeVO type);
 }

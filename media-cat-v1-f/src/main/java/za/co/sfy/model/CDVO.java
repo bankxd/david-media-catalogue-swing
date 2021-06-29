@@ -6,19 +6,6 @@ public class CDVO extends MediaTypeVO {
 	private int tracks;
 	private List<String> artists;
 
-	public CDVO(MediaTypeVO type, String title, int length, String genre, int tracks, List<String> artists) {
-		super(type, title, length, genre);
-		this.tracks = tracks;
-		this.artists = artists;
-	}
-	public CDVO() {
-	}
-	
-	
-
-	public CDVO(String title) {
-		super(title);
-	}
 	@Override
 	public MediaTypeVO getType() {
 		return super.getType();
@@ -74,5 +61,4 @@ public class CDVO extends MediaTypeVO {
 	public void setArtists(List<String> artists) {
 		this.artists = artists;
 	}
-
 }

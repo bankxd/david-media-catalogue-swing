@@ -15,19 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 
-import za.co.sfy.services.ClientServiceInterface;
-
-@SuppressWarnings("serial")
-public class XHomePanel extends JPanel {
+public class CenterHomePanel extends JPanel {
 	
+	private static final long serialVersionUID = 5036241293854159122L;
+
 	public int index;
 	
 	private ViewFrame v;
-	ClientServiceInterface cs;
 
-	public XHomePanel(ViewFrame v) {
+	public CenterHomePanel(ViewFrame v) {
 		this.v = v;
-//        cs = new ClientService();
 		initComponents();
 	}
 
@@ -118,6 +115,4 @@ public class XHomePanel extends JPanel {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-
-	// *******************************************************************
 }

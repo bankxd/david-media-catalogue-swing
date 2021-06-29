@@ -17,11 +17,11 @@ import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
 @SuppressWarnings("serial")
-public class XDVDCatalogue extends JPanel {
+public class CenterDVDCatalogue extends JPanel {
 
 	ClientServiceInterface cs;
 
-	public XDVDCatalogue() {
+	public CenterDVDCatalogue() {
 		cs = new ClientService();
 		initComponents();
 	}
@@ -60,7 +60,6 @@ public class XDVDCatalogue extends JPanel {
 		
 		JScrollPane sp = new JScrollPane(table);
 		
-		
 		JPanel t = new JPanel();
 		t.setPreferredSize(new Dimension(480, 290));
 		t.add(sp);
@@ -88,7 +87,5 @@ public class XDVDCatalogue extends JPanel {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(js2, gbc);
-
 	}
-
 }

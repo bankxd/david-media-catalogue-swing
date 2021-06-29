@@ -20,29 +20,27 @@ import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 
 import za.co.sfy.model.CDVO;
-import za.co.sfy.model.DVDVO;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
-public class XDeleteConfirmationDVD extends JPanel {
+public class CenterDeleteConfirmationCD extends JPanel {
 
-	private ViewFrame v;
-	ClientServiceInterface cs;
+	private static final long serialVersionUID = -6204763938739128889L;
+	private ViewFrame viewFrame;
+	ClientServiceInterface clientService;
 	String messageReturned;
 
-	public XDeleteConfirmationDVD(ViewFrame v, String message) {
-		this.v = v;
+	public CenterDeleteConfirmationCD(ViewFrame v, String message) {
+		this.viewFrame = v;
 		this.messageReturned = message;
-        cs = new ClientService();
-		initComponents();
-	}
-	
-	public XDeleteConfirmationDVD(ViewFrame v) {
-		this.v = v;
+		clientService = new ClientService();
 		initComponents();
 	}
 
-	// *******************************************************************
+	public CenterDeleteConfirmationCD(ViewFrame v) {
+		this.viewFrame = v;
+		initComponents();
+	}
 
 	public void initComponents() {
 		GridBagLayout gbl = new GridBagLayout();
@@ -57,23 +55,22 @@ public class XDeleteConfirmationDVD extends JPanel {
 
 		JRadioButton dvdRadio = new JRadioButton("DVD");
 		dvdRadio.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new DeleteDVDPanel(v));
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				viewFrame.putPanel(new DeleteDVDPanel(viewFrame));
+			}
+		});
 		JRadioButton cdRadio = new JRadioButton("CD");
 		cdRadio.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new DeleteCDPanel(v));
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				viewFrame.putPanel(new DeleteCDPanel(viewFrame));
+			}
+		});
+		
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(cdRadio);
 		bg.add(dvdRadio);
-
-		// *******************************************************************
 
 		JPanel gridBox = new JPanel(new BorderLayout());
 		JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -88,8 +85,6 @@ public class XDeleteConfirmationDVD extends JPanel {
 		grid.add(dvdRadio);
 		gridBox.add(grid, BorderLayout.CENTER);
 
-		// *******************************************************************
-
 		JPanel addBox = new JPanel(new BorderLayout());
 		JPanel addGrid = new JPanel(new BorderLayout());
 		addGrid.setPreferredSize(new Dimension(50, 0));
@@ -102,7 +97,7 @@ public class XDeleteConfirmationDVD extends JPanel {
 		addTop.add(addjl);
 		addBox.add(addTop, BorderLayout.NORTH);
 		addBox.add(addGrid, BorderLayout.CENTER);
-		if(getMessageReturned() != null) {
+		if (getMessageReturned() != null) {
 			JLabel res = new JLabel(getMessageReturned());
 			addBox.add(res);
 			res.setHorizontalAlignment(JLabel.CENTER);
@@ -116,22 +111,21 @@ public class XDeleteConfirmationDVD extends JPanel {
 		backBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DVDVO mtdvd = new DVDVO(getMessageReturned());
-				boolean deleteResult = cs.delete(mtdvd);
-				v.putPanel(new ResultPanel(v, deleteResult == true? "Successfully Deleted DVD" : "Unsuccessful"));
+				CDVO mtcd = new CDVO();
+				mtcd.setTitle(getMessageReturned());
+				boolean deleteResult = clientService.delete(mtcd);
+				viewFrame.putPanel(new ResultPanel(viewFrame, deleteResult == true ? "Successfully Deleted CD" : "Unsuccessful"));
 			}
 		});
 		backBut.addMouseListener(new MouseAdapter() {
-		    public void mouseEntered(MouseEvent evt) {
-		    	backBut.setBackground(Color.gray.brighter());
-		    }
+			public void mouseEntered(MouseEvent evt) {
+				backBut.setBackground(Color.gray.brighter());
+			}
 
-		    public void mouseExited(MouseEvent evt) {
-		    	backBut.setBackground(Color.green.darker());
-		    }
+			public void mouseExited(MouseEvent evt) {
+				backBut.setBackground(Color.green.darker());
+			}
 		});
-
-		// *******************************************************************
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -171,7 +165,6 @@ public class XDeleteConfirmationDVD extends JPanel {
 		this.add(backBut, gbc);
 
 	}
-	// *******************************************************************
 
 	public String getMessageReturned() {
 		return messageReturned;
@@ -180,6 +173,4 @@ public class XDeleteConfirmationDVD extends JPanel {
 	public void setMessageReturned(String messageReturned) {
 		this.messageReturned = messageReturned;
 	}
-	
-	
 }

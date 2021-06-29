@@ -5,7 +5,9 @@ import java.util.List;
 import za.co.sfy.domain.MediaType;
 
 public interface CatalogueResourceInterface {
-    boolean create(MediaType type);
-    List<MediaType> retrieveAllOfType(MediaType type);
-    boolean delete(MediaType type);
+	public boolean create(MediaType type);
+
+	public List<MediaType> retrieveAllOfType(MediaType type);
+
+	public boolean delete(MediaType type);
 }

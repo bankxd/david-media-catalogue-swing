@@ -85,6 +85,7 @@ public class CatalogueResource implements CatalogueResourceInterface {
 				try {
 					ps.close();
 				} catch (SQLException ex) {
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -105,24 +106,44 @@ public class CatalogueResource implements CatalogueResourceInterface {
 					for (String artist : split) {
 						artistList.add(artist);
 					}
-					CDList.add(new CD(((CD) type), rs.getString("TITLE"), rs.getInt("LENGTH"), rs.getString("GENRE"),
-							rs.getInt("TRACKS"), artistList));
+					CD cd = new CD();
+					cd.setType((CD) type);
+					cd.setTitle(rs.getString("TITLE"));
+					cd.setLength(rs.getInt("LENGTH"));
+					cd.setGenre(rs.getString("GENRE"));
+					cd.setTracks(rs.getInt("TRACKS"));
+					cd.setArtists(artistList);
+					CDList.add(cd);
 				}
 				return CDList;
 			} else if (type instanceof DVD) {
-				ArrayList<MediaType> DVDList = new ArrayList<>();
+				List<MediaType> DVDList = new ArrayList<>();
 				ps = conn.prepareStatement(
 						"SELECT TITLE, LENGTH, GENRE, TYPE, LEADACTOR, LEADACTRESS FROM DVDTABLE WHERE ACTIVITY = 'ACTIVE'");
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					DVDList.add(new DVD(((DVD) type), rs.getString("TITLE"), rs.getInt("LENGTH"), rs.getString("GENRE"),
-							rs.getString("LEADACTOR"), rs.getString("LEADACTRESS")));
+					DVD dvd = new DVD();
+					dvd.setType((DVD) type);
+					dvd.setTitle(rs.getString("TITLE"));
+					dvd.setLength(rs.getInt("LENGTH"));
+					dvd.setGenre(rs.getString("GENRE"));
+					dvd.setLeadActor(rs.getString("LEADACTOR"));
+					dvd.setLeadActress(rs.getString("LEADACTRESS"));
+					DVDList.add(dvd);
 				}
 				return DVDList;
 			}
 		} catch (SQLException ex) {
 			System.out.println("Error retrieving.");
 			ex.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 		return Collections.emptyList();
 	}
@@ -142,12 +163,19 @@ public class CatalogueResource implements CatalogueResourceInterface {
 				ps = conn.prepareStatement("UPDATE DVDTABLE SET ACTIVITY = 'INACTIVE' WHERE TITLE = ?");
 				ps.setString(1, dvd.getTitle());
 				checkDVD = ps.executeUpdate();
-
 				return checkDVD > 0 ? true : false;
 			}
 		} catch (SQLException ex) {
 			System.out.println("Error updating.");
 			ex.printStackTrace();
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 		return false;
 	}

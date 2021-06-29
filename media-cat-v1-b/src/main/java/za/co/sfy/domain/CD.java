@@ -6,19 +6,6 @@ public class CD extends MediaType {
 	private int tracks;
 	private List<String> artists;
 
-	public CD(MediaType type, String title, int length, String genre, int tracks, List<String> artists) {
-		super(type, title, length, genre);
-		this.tracks = tracks;
-		this.artists = artists;
-	}
-
-	public CD(MediaType type, String title) {
-		super(type, title);
-	}
-	
-	public CD() {
-	}
-
 	@Override
 	public String getTitle() {
 		return super.getTitle();
@@ -74,5 +61,4 @@ public class CD extends MediaType {
 	public void setArtists(List<String> artists) {
 		this.artists = artists;
 	}
-
 }

@@ -3,14 +3,8 @@ package za.co.sfy.view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,11 +16,12 @@ import za.co.sfy.model.MediaTypeVO;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
-public class XCDCatalogue extends JPanel {
+public class CenterCDCatalogue extends JPanel {
 
+	private static final long serialVersionUID = 4970273710941048277L;
 	ClientServiceInterface cs;
 
-	public XCDCatalogue() {
+	public CenterCDCatalogue() {
 		cs = new ClientService();
 		initComponents();
 	}
@@ -64,7 +59,6 @@ public class XCDCatalogue extends JPanel {
 
 		JScrollPane sp = new JScrollPane(table);
 		
-		
 		JPanel t = new JPanel();
 		t.setPreferredSize(new Dimension(480, 290));
 		t.add(sp);
@@ -92,6 +86,5 @@ public class XCDCatalogue extends JPanel {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(js2, gbc);
-
 	}
 }

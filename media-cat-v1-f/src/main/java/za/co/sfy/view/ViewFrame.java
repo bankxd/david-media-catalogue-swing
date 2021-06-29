@@ -8,15 +8,15 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class ViewFrame extends JFrame {
 
-    private JPanel framePanel;
+	private static final long serialVersionUID = -574054636316520739L;
+	
+	private JPanel framePanel;
 
-    // *******************************************************************
     public void createAndShowGUI() {
         this.setTitle("Media Catalogue");
-        framePanel = new FramePanel();
+        framePanel = new JPanel();
         framePanel.setBackground(Color.WHITE);
         framePanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         framePanel.setLayout(new BorderLayout());
@@ -28,7 +28,6 @@ public class ViewFrame extends JFrame {
         this.setVisible(true);
     }
 
-    // *******************************************************************
     public void putPanel(Component component) {
         Component[] components = framePanel.getComponents();
         for (Component c : components) {
@@ -42,7 +41,5 @@ public class ViewFrame extends JFrame {
     }
 	public static void main(String[] args) {
 		new ViewFrame().createAndShowGUI();
-
 	}
-
 }

@@ -19,28 +19,22 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 
-import za.co.sfy.model.DVDVO;
-import za.co.sfy.services.ClientServiceInterface;
+public class CenterCatalogueHome extends JPanel {
 
-public class XCatalogueHome extends JPanel {
-
-	private ViewFrame v;
-	ClientServiceInterface cs;
+	private static final long serialVersionUID = -703374646384173633L;
+	private ViewFrame viewFrame;
 	String messageReturned;
 
-	public XCatalogueHome(ViewFrame v, String message) {
-		this.v = v;
+	public CenterCatalogueHome(ViewFrame v, String message) {
+		this.viewFrame = v;
 		this.messageReturned = message;
-//        cs = new ClientService();
 		initComponents();
 	}
 	
-	public XCatalogueHome(ViewFrame v) { 
-		this.v = v;
+	public CenterCatalogueHome(ViewFrame v) { 
+		this.viewFrame = v;
 		initComponents();
 	}
-
-	// *******************************************************************
 
 	public void initComponents() {
 		GridBagLayout gbl = new GridBagLayout();
@@ -57,21 +51,19 @@ public class XCatalogueHome extends JPanel {
 		dvdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new AddDVDPanel(v));
+	        	viewFrame.putPanel(new AddDVDPanel(viewFrame));
 	        }
 	    });
 		JRadioButton cdRadio = new JRadioButton("CD");
 		cdRadio.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	v.putPanel(new AddCDPanel(v));
+	        	viewFrame.putPanel(new AddCDPanel(viewFrame));
 	        }
 	    });
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(cdRadio);
 		bg.add(dvdRadio);
-
-		// *******************************************************************
 
 		JPanel gridBox = new JPanel(new BorderLayout());
 		JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -85,8 +77,6 @@ public class XCatalogueHome extends JPanel {
 		grid.add(cdRadio);
 		grid.add(dvdRadio);
 		gridBox.add(grid, BorderLayout.CENTER);
-
-		// *******************************************************************
 
 		JPanel addBox = new JPanel(new BorderLayout());
 		JPanel addGrid = new JPanel(new BorderLayout());
@@ -114,7 +104,7 @@ public class XCatalogueHome extends JPanel {
 		deleteBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				v.putPanel(new DeletePanel(v));
+				viewFrame.putPanel(new DeletePanel(viewFrame));
 			}
 		});
 		deleteBut.addMouseListener(new MouseAdapter() {
@@ -126,8 +116,6 @@ public class XCatalogueHome extends JPanel {
 		    	deleteBut.setBackground(Color.green.darker());
 		    }
 		});
-
-		// *******************************************************************
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -167,7 +155,6 @@ public class XCatalogueHome extends JPanel {
 		this.add(deleteBut, gbc);
 
 	}
-	// *******************************************************************
 
 	public String getMessageReturned() {
 		return messageReturned;
@@ -176,6 +163,4 @@ public class XCatalogueHome extends JPanel {
 	public void setMessageReturned(String messageReturned) {
 		this.messageReturned = messageReturned;
 	}
-	
-	
 }

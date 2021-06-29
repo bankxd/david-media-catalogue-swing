@@ -9,78 +9,46 @@ import java.net.Socket;
 
 public class NetworkClient implements NetworkClientInterface {
 
-	// XXX 's' is a terrible name for a variable, call it socket
-	private Socket s;
-
-//	public static void main(String[] args) {
-//		String test = "1#CD#title#2#genre#12#artist1, artist2";
-//		String test1 = "1#DVD#title#212#genre#leadactor#leadactress";
-//		String test12 = "4#DVD#title";
-//		new NetworkClient().writeProtocolToServer(test12);
-//		String readProtocolFromServer = new NetworkClient().readProtocolFromServer();
-//		System.out.println(readProtocolFromServer);
-//	}
+	private Socket socket;
 
 	public NetworkClient() {
 		runClient();
 	}
-	
-	// *************************************************************************
 
 	public void runClient() {
 		try {
-			s = new Socket("127.0.0.1", 12121);
+			socket = new Socket("127.0.0.1", 12121);
 		} catch (IOException ex) {
-			// XXX This is where we should be throwing a RuntimeException, If we cannot connect to the database the should the app continue to run?
-			System.out.println("Error creating socket"); 
 			ex.printStackTrace();
+			System.exit(0);
 		}
 	}
-	
-	// *************************************************************************
 
 	public boolean writeProtocolToServer(String protocol) {
+		OutputStream outputStream = null;
+		PrintWriter printWriter = null;
 		try {
-			OutputStream os = s.getOutputStream();
-			PrintWriter pw = new PrintWriter(os, true);
-			pw.println(protocol);
+			outputStream = socket.getOutputStream();
+			printWriter = new PrintWriter(outputStream, true);
+			printWriter.println(protocol);
 			System.out.println("CLIENT: Message sent");
 			return true;
 		} catch (IOException ex) {
 			System.out.println("Error Writing: " + ex.getMessage());
-		} finally {
-			// XXX why are you not closing the connections? It seems that the code calling this code is responsible to managing the connections?
-//			try {
-//				if (s != null) {
-//					s.close();
-//				}
-//			} catch (IOException ex) {
-//			}
 		}
 		return false;
 	}
-	
-	// *************************************************************************
 
 	public String readProtocolFromServer() {
 		String serverResponse = null;
+		BufferedReader bufferedReader = null;
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			serverResponse = br.readLine();
+			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			serverResponse = bufferedReader.readLine();
 			System.out.println("CLIENT: Message read");
 		} catch (IOException ex) {
 			System.out.println("Error Reading: " + ex);
-		} finally {
-//			try {
-//				if (br != null) {
-//					br.close();
-//				}
-//			} catch (IOException ex) {
-//			}
 		}
 		return serverResponse;
 	}
-	
-	// *************************************************************************
-
 }
