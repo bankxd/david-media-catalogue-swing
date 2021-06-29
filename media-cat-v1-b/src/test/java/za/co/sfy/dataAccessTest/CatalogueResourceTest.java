@@ -1,15 +1,10 @@
 package za.co.sfy.dataAccessTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import za.co.sfy.dataAccess.CatalogueResource;
 import za.co.sfy.domain.CD;
 import za.co.sfy.domain.DVD;
 import za.co.sfy.domain.MediaType;

@@ -25,7 +25,6 @@ public class CatalogueService {
 		new CatalogueService(12121);
 	}
 
-	// *************************************************************************
 	public CatalogueService(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
@@ -35,18 +34,17 @@ public class CatalogueService {
 		runServer();
 	}
 
-	// *************************************************************************
 	private void runServer() {
 		System.out.println("Waiting for client. . .");
 		while (true) {
 			try {
 				new SocketThread(serverSocket.accept()).start();
 			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
-	// *************************************************************************
 	class SocketThread extends Thread {
 
 		CatalogueResourceInterface cr;
@@ -56,8 +54,6 @@ public class CatalogueService {
 			this.socket = socket;
 			cr = new CatalogueResource();
 		}
-		
-		// *************************************************************************
 
 		@Override
 		public void run() {
@@ -67,12 +63,9 @@ public class CatalogueService {
 
 		}
 
-		// *************************************************************************
-
 		// Reader
 		// CD - action | type | title | length | genre | tracks | artists
 		// DVD - action | type | title | length | genre | leadactor | leadactress
-		
 		public String processClientRequest() {
 			BufferedReader br = null;
 			String response = null;
@@ -101,25 +94,23 @@ public class CatalogueService {
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
-//			} finally {
-//				try {
-//					br.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				} finally {
-//					try {
-//						socket.close();
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				}
+			} finally {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						socket.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			return response;
 		}
-		
-		// *************************************************************************
+
 		// Writer
-		
 		public void processServerResponse(String response) {
 			PrintWriter pw = null;
 			try {
@@ -129,22 +120,20 @@ public class CatalogueService {
 				System.out.println("SERVER: Message written");
 			} catch (IOException e) {
 				e.printStackTrace();
-//			} finally {
-//				try {
-//					pw.close();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				} finally {
-//					try {
-//						socket.close();
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				}
+			} finally {
+				try {
+					pw.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						socket.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
-		
-		// *************************************************************************
 
 		public String createRequest(String[] protocol) {
 			try {
@@ -171,8 +160,6 @@ public class CatalogueService {
 			}
 			return "Failed";
 		}
-
-		// *************************************************************************
 
 		@Test
 		public String retrieveAllResponse(String[] protocol) {
@@ -204,8 +191,6 @@ public class CatalogueService {
 			return "Failed";
 		}
 
-		// *************************************************************************
-
 		public String deleteRequest(String[] protocol) {
 			try {
 				if (protocol[1].equals("CD")) {
@@ -225,7 +210,5 @@ public class CatalogueService {
 			}
 			return "Failed";
 		}
-
-		// *************************************************************************
 	}
 }
