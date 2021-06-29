@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+// XXX please do not commit code with un-used imports
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
@@ -24,6 +25,7 @@ import za.co.sfy.services.ClientServiceInterface;
 public class AboutPanel extends JPanel {
 
 	@SuppressWarnings("unused")
+	// XXX 'v' is a terrible name for a variable
 	private ViewFrame v;
 	ClientServiceInterface cs;
 	int selectedIndex;
@@ -93,6 +95,7 @@ public class AboutPanel extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// XXX What will happen on this line if myPicture is null because the exception was swallowed on the line above.
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 		westPanelNav.add(picLabel);
 		westPanelNav.setBackground(Color.GREEN.darker());

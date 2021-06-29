@@ -13,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
+/*
+ * XXX XAboutPanel looks like an old copy of AboutPanel, since we have tools like Git 
+ * you should never need to commit old code which you might want to keep, rather commit it to a branch
+ */
 @SuppressWarnings("serial")
 public class XAboutPanel extends JPanel {
 	
