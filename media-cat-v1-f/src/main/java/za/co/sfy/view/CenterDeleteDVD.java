@@ -29,6 +29,11 @@ import za.co.sfy.model.MediaTypeVO;
 import za.co.sfy.services.ClientService;
 import za.co.sfy.services.ClientServiceInterface;
 
+/*
+ *  XXX This class is about 80% similar to za.co.sfy.view.CenterDeleteCD, I would recommend creating a abstract class, which CenterDeleteCD and CenterDeleteDVD can extend.
+ *  The same as you did for the classes: AddCDPanel, AddDVDPanel, etc...
+ */
+
 public class CenterDeleteDVD extends JPanel {
 	
 	private static final long serialVersionUID = -4187373672268545115L;
@@ -149,9 +154,11 @@ public class CenterDeleteDVD extends JPanel {
 		    }
 		});
 
+		// XXX gbc is not a good name for a variable
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+		// XXX the word 'this' is not required here
 		this.add(topLabel, gbc);
 
 		gbc.gridx = 0;

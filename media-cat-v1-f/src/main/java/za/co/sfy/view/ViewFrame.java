@@ -39,6 +39,9 @@ public class ViewFrame extends JFrame {
         framePanel.validate();
         framePanel.repaint();
     }
+    
+    // XXX The convention is that (public static) methods should be ordered before methods that are not static, the main method should be the first method after the constructor methods
+    // https://www.oracle.com/java/technologies/javase/codeconventions-fileorganization.html#182
 	public static void main(String[] args) {
 		new ViewFrame().createAndShowGUI();
 	}

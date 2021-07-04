@@ -78,6 +78,7 @@ public abstract class AbstractTemplate extends JPanel {
 		JPanel westPanelNav = new JPanel(new BorderLayout());
 		BufferedImage myPicture = null;
 		try {
+			// XXX to avoid hard coding values specific to your environment, I would recommend you use property files, see: https://crunchify.com/java-properties-file-how-to-read-config-properties-values-in-java/
 			myPicture = ImageIO.read(new File("C:\\Users\\daves\\Pictures\\mediaCatImg.png"));
 		} catch (IOException e) {
 

@@ -83,6 +83,7 @@ public class ResultPanel extends JPanel {
 		try {
 			myPicture = ImageIO.read(new File("C:\\Users\\daves\\Pictures\\mediaCatImg.png"));
 		} catch (IOException e) {
+			// XXX please handle this exception correctly
 			e.printStackTrace();
 		}
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));

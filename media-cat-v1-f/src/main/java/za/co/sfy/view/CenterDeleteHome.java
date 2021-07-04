@@ -23,8 +23,10 @@ public class CenterDeleteHome extends JPanel {
 
 	private static final long serialVersionUID = -6893228592447032339L;
 	private ViewFrame viewFrame;
+	// XXX why is messageReturned not defined to be private?
 	String messageReturned;
 
+	// XXX 'v' is not a good name for a parameter
 	public CenterDeleteHome(ViewFrame v, String message) {
 		this.viewFrame = v;
 		this.messageReturned = message;
@@ -39,6 +41,11 @@ public class CenterDeleteHome extends JPanel {
 	public void initComponents() {
 		messageReturned = null;
 		GridBagLayout gbl = new GridBagLayout();
+		
+		/*
+		 * XXX avoid using the word 'this' if there is only one method/variable that 'this' can be, we only use 'this' when there is a local method/variable matching a parameter or if there is a local method with the same signature.
+		 * Using the word 'this' here is redundant
+		 */
 		this.setLayout(gbl);
 		GridBagConstraints gbc = new GridBagConstraints();
 
