@@ -17,13 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class SelectionDeleteConfirmationCD extends JPanel {
+public class SelectionDeleteConfirmationCDPanel extends JPanel {
 
 	private static final long serialVersionUID = 7663608837750107060L;
 	private ViewFrame v;
-	int selectedIndex;
 
-	public SelectionDeleteConfirmationCD(ViewFrame v, String title) {
+	public SelectionDeleteConfirmationCDPanel(ViewFrame v, String title) {
 		this.v = v;
 		initComponents(title);
 	}
@@ -40,7 +39,7 @@ public class SelectionDeleteConfirmationCD extends JPanel {
 		navPanel.setPreferredSize(new Dimension(1000, 60));
 
 		JButton homeBut = new JButton("HOME");
-		homeBut.setBackground(Color.GREEN.darker());
+		homeBut.setBackground(Color.GREEN.darker()); 
 		homeBut.setForeground(Color.WHITE);
 		homeBut.setBorderPainted(false);
 		homeBut.addActionListener(new ActionListener() {

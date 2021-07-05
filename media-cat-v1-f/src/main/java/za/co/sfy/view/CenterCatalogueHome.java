@@ -164,3 +164,60 @@ public class CenterCatalogueHome extends JPanel {
 		this.messageReturned = messageReturned;
 	}
 }
+
+
+
+
+//package za.co.sfy.view;
+//
+//import java.awt.Dimension;
+//import java.awt.GridBagConstraints;
+//
+//import javax.swing.JPanel;
+//
+//public class CenterCatalogueHome extends AbstractCenterPanel {
+//
+//	private static final long serialVersionUID = 1L;
+//	private String messageReturned;
+//
+//	public CenterCatalogueHome(ViewFrame viewFrame, String message) {
+//		this.messageReturned = message;
+//		initComponents(viewFrame, message);
+//	}
+//
+//	public CenterCatalogueHome(ViewFrame viewFrame) {
+//		initComponents(viewFrame);
+//	}
+//
+//	public void initComponents(ViewFrame viewFrame) {
+//		GridBagConstraints gridBagConstraints = initGridBag();
+//		JPanel addBox = setAddBox("Add Item");
+//		setAddGrid(addBox);
+//		setConstraints(0, 0, GridBagConstraints.FIRST_LINE_START, setTitleJLabel("Catalogue"), gridBagConstraints);
+//		setConstraints(0, 1, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, setTopSeparator(new Dimension(400, 5)), gridBagConstraints);
+//		setConstraints(0, 2, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, setAddRadioGroup(viewFrame), gridBagConstraints);
+//		setConstraints(0, 3, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, 0.2, addBox, gridBagConstraints);
+//		setConstraints(0, 4, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, 0.0, setLowerSeparator(new Dimension(400, 5)), gridBagConstraints);
+//		setConstraints(0, 5, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, setDeleteButton(viewFrame, new DeletePanel(viewFrame)), gridBagConstraints);
+//	}
+//	
+//	public void initComponents(ViewFrame viewFrame, String message) {
+//		GridBagConstraints gridBagConstraints = initGridBag(); 
+//		JPanel addBox = setAddBox("Add Item", message);
+//		setAddGrid(addBox);
+//		setConstraints(0, 0, GridBagConstraints.FIRST_LINE_START, setTitleJLabel("Catalogue"), gridBagConstraints);
+//		setConstraints(0, 1, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, setTopSeparator(new Dimension(400, 5)), gridBagConstraints);
+//		setConstraints(0, 2, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, setAddRadioGroup(viewFrame), gridBagConstraints);
+//		setConstraints(0, 3, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, 0.2, addBox, gridBagConstraints);
+//		setConstraints(0, 4, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, 0.0, setLowerSeparator(new Dimension(400, 5)), gridBagConstraints);
+//		setConstraints(0, 5, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, setDeleteButton(viewFrame, new DeletePanel(viewFrame)), gridBagConstraints);
+//	}
+//
+//	public String getMessageReturned() {
+//		return messageReturned;
+//	}
+//
+//	public void setMessageReturned(String messageReturned) {
+//		this.messageReturned = messageReturned;
+//	}
+//}

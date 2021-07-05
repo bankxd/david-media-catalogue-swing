@@ -2,10 +2,10 @@ package za.co.sfy.view;
 
 import javax.swing.JPanel;
 
-public class HomePanel extends AbstractTemplate {
+public class HomePanel extends AbstractBackGroundPanel {
 	
-	private static final long serialVersionUID = -6941754009840686963L;
-	
+	private static final long serialVersionUID = 1L;
+
 	public HomePanel(ViewFrame viewFrame) {
 		super(viewFrame);
 		initComponents(new CenterHomePanel(viewFrame));

@@ -21,7 +21,7 @@ public class ResultPanel extends JPanel {
 
 	private static final long serialVersionUID = 181305472363242741L;
 	private ViewFrame v;
-	String messageReturned;
+	private String messageReturned;
 
 	public ResultPanel(ViewFrame v, String message) {
 		this.v = v;
@@ -83,8 +83,7 @@ public class ResultPanel extends JPanel {
 		try {
 			myPicture = ImageIO.read(new File("C:\\Users\\daves\\Pictures\\mediaCatImg.png"));
 		} catch (IOException e) {
-			// XXX please handle this exception correctly
-			e.printStackTrace();
+			 throw new RuntimeException("Error loading Image:", e);
 		}
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 		westPanelNav.add(picLabel);
@@ -103,7 +102,7 @@ public class ResultPanel extends JPanel {
 		mainCenterPanel.setPreferredSize(new Dimension(100, 100));
 		mainCenterPanel.setMaximumSize(new Dimension(100, 100));
 		mainCenterPanel.setBorder(new LineBorder(Color.WHITE, 10, false));
-		mainCenterPanel.add(new CenterCatalogueHome(v, message), BorderLayout.CENTER);
+		mainCenterPanel.add(new CenterCatalogueHome(v, getMessageReturned()), BorderLayout.CENTER);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BorderLayout());

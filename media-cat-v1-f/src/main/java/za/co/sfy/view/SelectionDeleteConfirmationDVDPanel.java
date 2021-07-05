@@ -17,13 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class SelectionDeleteConfirmationDVD extends JPanel {
+public class SelectionDeleteConfirmationDVDPanel extends JPanel {
 
 	private static final long serialVersionUID = 6861109673814753149L;
 	private ViewFrame v;
 	int selectedIndex;
 
-	public SelectionDeleteConfirmationDVD(ViewFrame v, String title) {
+	public SelectionDeleteConfirmationDVDPanel(ViewFrame v, String title) {
 		this.v = v;
 		initComponents(title);
 	}
@@ -44,7 +44,7 @@ public class SelectionDeleteConfirmationDVD extends JPanel {
 		homeBut.setForeground(Color.WHITE);
 		homeBut.setBorderPainted(false);
 		homeBut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(ActionEvent evt) { 
 				v.putPanel(new HomePanel(v));
 			}
 		});

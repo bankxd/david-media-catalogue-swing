@@ -10,9 +10,12 @@ import javax.swing.JPanel;
 
 public class ViewFrame extends JFrame {
 
-	private static final long serialVersionUID = -574054636316520739L;
-	
+	private static final long serialVersionUID = 1L;
 	private JPanel framePanel;
+	
+	public static void main(String[] args) {
+		new ViewFrame().createAndShowGUI();
+	}
 
     public void createAndShowGUI() {
         this.setTitle("Media Catalogue");
@@ -27,7 +30,7 @@ public class ViewFrame extends JFrame {
         this.setSize(1000, 600);
         this.setVisible(true);
     }
-
+    
     public void putPanel(Component component) {
         Component[] components = framePanel.getComponents();
         for (Component c : components) {
@@ -39,10 +42,4 @@ public class ViewFrame extends JFrame {
         framePanel.validate();
         framePanel.repaint();
     }
-    
-    // XXX The convention is that (public static) methods should be ordered before methods that are not static, the main method should be the first method after the constructor methods
-    // https://www.oracle.com/java/technologies/javase/codeconventions-fileorganization.html#182
-	public static void main(String[] args) {
-		new ViewFrame().createAndShowGUI();
-	}
 }

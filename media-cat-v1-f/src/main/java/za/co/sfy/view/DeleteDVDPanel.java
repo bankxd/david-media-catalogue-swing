@@ -2,7 +2,7 @@ package za.co.sfy.view;
 
 import javax.swing.JPanel;
 
-public class DeleteDVDPanel extends AbstractTemplate {
+public class DeleteDVDPanel extends AbstractBackGroundPanel {
 	
 	private static final long serialVersionUID = -6941754009840686963L;
 	

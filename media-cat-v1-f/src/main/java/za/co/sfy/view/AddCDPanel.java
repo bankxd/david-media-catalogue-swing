@@ -2,10 +2,10 @@ package za.co.sfy.view;
 
 import javax.swing.JPanel;
 
-public class AddCDPanel extends AbstractTemplate {
+public class AddCDPanel extends AbstractBackGroundPanel {
 	
-	private static final long serialVersionUID = -6941754009840686963L;
-	
+	private static final long serialVersionUID = 1L;
+
 	public AddCDPanel(ViewFrame viewFrame) {
 		super(viewFrame);
 		initComponents(new CenterAddCD(viewFrame));

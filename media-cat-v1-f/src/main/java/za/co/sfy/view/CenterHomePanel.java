@@ -3,43 +3,33 @@ package za.co.sfy.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 
-public class CenterHomePanel extends JPanel {
+public class CenterHomePanel extends AbstractCenterPanel {
 	
-	private static final long serialVersionUID = 5036241293854159122L;
+	private static final long serialVersionUID = 1L;
 
-	public int index;
-	
-	private ViewFrame v;
-
-	public CenterHomePanel(ViewFrame v) {
-		this.v = v;
-		initComponents();
+	public CenterHomePanel(ViewFrame viewFrame) {
+		initComponents(viewFrame);
 	}
 
-	public void initComponents() {
-		index = 1;
-		GridBagLayout gbl = new GridBagLayout();
-		this.setLayout(gbl);
-		GridBagConstraints gbc = new GridBagConstraints();
+	public void initComponents(ViewFrame viewFrame) {
+		GridBagConstraints gridBagConstraints = initGridBag();
+		setConstraints(0, 0, GridBagConstraints.FIRST_LINE_START, setTitleJLabel("Home"), gridBagConstraints);
+		setConstraints(0, 1, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, 1, setTopSeparator(new Dimension(400, 250)), gridBagConstraints);
+		setConstraints(0, 2, GridBagConstraints.VERTICAL, GridBagConstraints.CENTER, 1,  setLowerSeparator(new Dimension(400, 5)), gridBagConstraints);
+		setConstraints(0, 3, GridBagConstraints.CENTER, setButtonPanel(viewFrame), gridBagConstraints);
+	}
 
-		JLabel topLabel = new JLabel("Home");
-		JSeparator js1 = new JSeparator();
-		js1.setPreferredSize(new Dimension(400, 250));
-		JSeparator js2 = new JSeparator();
-		js2.setPreferredSize(new Dimension(400, 5));
-
+	
+	public JPanel setButtonPanel(ViewFrame viewFrame) {
 		JButton dvdBut = new JButton("DVDs");
 		dvdBut.setPreferredSize(new Dimension(100, 25));
 		dvdBut.setForeground(Color.white);
@@ -47,7 +37,7 @@ public class CenterHomePanel extends JPanel {
 		dvdBut.setBorder(new LineBorder(Color.green.brighter()));
 		dvdBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				v.putPanel(new DVDCataloguePanel(v));
+				viewFrame.putPanel(new DVDCataloguePanel(viewFrame));
 			}
 		});
 		dvdBut.addMouseListener(new MouseAdapter() {
@@ -66,7 +56,7 @@ public class CenterHomePanel extends JPanel {
 		cdBut.setBorder(new LineBorder(Color.green.brighter()));
 		cdBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				v.putPanel(new CDCataloguePanel(v));
+				viewFrame.putPanel(new CDCataloguePanel(viewFrame));
 			}
 		});
 		cdBut.addMouseListener(new MouseAdapter() {
@@ -81,38 +71,6 @@ public class CenterHomePanel extends JPanel {
 		JPanel butPan = new JPanel();
 		butPan.add(dvdBut);
 		butPan.add(cdBut);
-
-		gbc.gridx = 0;
-		gbc.gridy = 0; 
-		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-		this.add(topLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		gbc.weighty = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(js1, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		gbc.weighty = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(js2, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(butPan, gbc);
-
-	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
+		return butPan;
 	}
 }

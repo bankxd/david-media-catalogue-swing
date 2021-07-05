@@ -144,20 +144,20 @@ public class CatalogueService {
 				if (protocol[1].equals("CD")) {
 					StringBuilder sb1 = new StringBuilder();
 					List<MediaType> retrieveAllOfTypeCD = catalogueResource.retrieveAllOfType(new CD());
-					for (MediaType mediatype : retrieveAllOfTypeCD) {
-						sb1.append(("CD" + "#" + ((CD) mediatype).getTitle() + "#" + ((CD) mediatype).getLength() + "#"
-								+ ((CD) mediatype).getGenre() + "#" + ((CD) mediatype).getTracks() + "#"
-								+ ((CD) mediatype).getArtists()));
+					for (MediaType mediatypeC : retrieveAllOfTypeCD) {
+						sb1.append(("CD" + "#" + ((CD) mediatypeC).getTitle() + "#" + ((CD) mediatypeC).getLength() + "#"
+								+ ((CD) mediatypeC).getGenre() + "#" + ((CD) mediatypeC).getTracks() + "#"
+								+ ((CD) mediatypeC).getArtists()));
 						sb1.append("--");
 					}
 					return sb1.toString();
 				} else if (protocol[1].equals("DVD")) {
 					StringBuilder sb2 = new StringBuilder();
-					List<MediaType> retrieveAllOfTypeDVD = catalogueResource.retrieveAllOfType((MediaType) new DVD());
-					for (MediaType mediatype : retrieveAllOfTypeDVD) {
-						sb2.append(("DVD" + "#" + ((DVD) mediatype).getTitle() + "#" + ((DVD) mediatype).getLength()
-								+ "#" + ((DVD) mediatype).getGenre() + "#" + ((DVD) mediatype).getLeadActor() + "#"
-								+ ((DVD) mediatype).getLeadActress()));
+					List<MediaType> retrieveAllOfTypeDVD = catalogueResource.retrieveAllOfType(new DVD());
+					for (MediaType mediatypeD : retrieveAllOfTypeDVD) {
+						sb2.append(("DVD" + "#" + ((DVD) mediatypeD).getTitle() + "#" + ((DVD) mediatypeD).getLength()
+								+ "#" + ((DVD) mediatypeD).getGenre() + "#" + ((DVD) mediatypeD).getLeadActor() + "#"
+								+ ((DVD) mediatypeD).getLeadActress()));
 						sb2.append("--");
 					}
 					return sb2.toString();

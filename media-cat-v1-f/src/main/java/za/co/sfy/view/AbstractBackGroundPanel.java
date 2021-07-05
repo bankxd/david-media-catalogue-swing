@@ -17,12 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public abstract class AbstractTemplate extends JPanel {
+public abstract class AbstractBackGroundPanel extends JPanel {
 	
-	private static final long serialVersionUID = -6941754009840686963L;
+	private static final long serialVersionUID = 1L;
 	private ViewFrame viewFrame;
 
-	public AbstractTemplate(ViewFrame v) {
+	public AbstractBackGroundPanel(ViewFrame v) {
 		this.viewFrame = v;
 	}
 	
@@ -81,8 +81,7 @@ public abstract class AbstractTemplate extends JPanel {
 			// XXX to avoid hard coding values specific to your environment, I would recommend you use property files, see: https://crunchify.com/java-properties-file-how-to-read-config-properties-values-in-java/
 			myPicture = ImageIO.read(new File("C:\\Users\\daves\\Pictures\\mediaCatImg.png"));
 		} catch (IOException e) {
-
-			e.printStackTrace();
+			throw new RuntimeException("Error loading Image:", e);
 		}
 		JLabel picLabel = null;
 		if (myPicture != null) {

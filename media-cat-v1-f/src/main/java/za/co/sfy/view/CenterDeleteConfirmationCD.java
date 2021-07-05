@@ -39,7 +39,7 @@ public class CenterDeleteConfirmationCD extends JPanel {
 
 	public CenterDeleteConfirmationCD(ViewFrame v) {
 		this.viewFrame = v;
-		initComponents();
+		initComponents(); 
 	}
 
 	public void initComponents() {

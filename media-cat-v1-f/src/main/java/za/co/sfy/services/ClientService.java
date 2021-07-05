@@ -41,7 +41,7 @@ public class ClientService implements ClientServiceInterface {
 		} else if (type instanceof DVDVO) {
 			DVDVO mtdvd = (DVDVO) type;
 			StringBuilder stringBuilderDVD = new StringBuilder();
-			stringBuilderDVD.append("1#CD#");
+			stringBuilderDVD.append("1#DVD#");
 			stringBuilderDVD.append(mtdvd.getTitle());
 			stringBuilderDVD.append("#");
 			stringBuilderDVD.append(mtdvd.getLength());
@@ -123,5 +123,10 @@ public class ClientService implements ClientServiceInterface {
 			return true;
 		}
 		return false;
+	}
+	
+	public static void main(String[] args) {
+		List<MediaTypeVO> receiveAllOfMediaType = new ClientService().receiveAllOfMediaType(new DVDVO());
+System.out.println(receiveAllOfMediaType);
 	}
 }
